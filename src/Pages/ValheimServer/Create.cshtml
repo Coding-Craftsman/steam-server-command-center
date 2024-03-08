@@ -1,0 +1,70 @@
+﻿@page
+@model steam_server_command_center.Pages.ValheimServer.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>ValheimConfiguration</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.ServerName" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.ServerName" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.ServerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.WorldName" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.WorldName" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.WorldName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.Password" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.Password" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.GameRootFolderName" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.GameRootFolderName" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.GameRootFolderName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.GameServerID" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.GameServerID" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.GameServerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.InstanceName" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.InstanceName" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.InstanceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValheimConfiguration.ContainerID" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.ContainerID" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.ContainerID" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ValheimConfiguration.IsActive" /> @Html.DisplayNameFor(model => model.ValheimConfiguration.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

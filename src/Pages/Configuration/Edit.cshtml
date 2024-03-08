@@ -1,0 +1,41 @@
+﻿@page
+@model steam_server_command_center.Pages.Configuration.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>ConfigurationItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ConfigurationItem.ID" />
+            <div class="form-group">
+                <label asp-for="ConfigurationItem.Key" class="control-label"></label>
+                <input asp-for="ConfigurationItem.Key" class="form-control" />
+                <span asp-validation-for="ConfigurationItem.Key" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfigurationItem.Value" class="control-label"></label>
+                <input asp-for="ConfigurationItem.Value" class="form-control" />
+                <span asp-validation-for="ConfigurationItem.Value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,872 @@
+﻿@page
+@model steam_server_command_center.Pages.ProjectZomboid.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ProjectZomboidConfiguration</h4>
+    <hr />
+    <dl class="row">        
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AdminPassword)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AdminPassword)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ServerHome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ServerHome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ServerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ServerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ConfigFileLocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ConfigFileLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PVP)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PVP)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PauseEmpty)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PauseEmpty)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.GlobalChat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.GlobalChat)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ChatStreams)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ChatStreams)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Open)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Open)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ServerWelcomeMessage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ServerWelcomeMessage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AutoCreateUserInWhiteList)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AutoCreateUserInWhiteList)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisplayUserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisplayUserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ShowFirstAndLastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ShowFirstAndLastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SpawnPoint)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SpawnPoint)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafetySystem)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafetySystem)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ShowSafety)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ShowSafety)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafetyToggleTimer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafetyToggleTimer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafetyCooldownTimer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafetyCooldownTimer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SpawnItems)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SpawnItems)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DefaultPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DefaultPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.UDPPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.UDPPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ResetID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ResetID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Mods)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Mods)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Map)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Map)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DoLuaChecksum)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DoLuaChecksum)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DenyLoginOnOverloadedServer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DenyLoginOnOverloadedServer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Public)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Public)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PublicName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PublicName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PublicDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PublicDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.MaxPlayers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.MaxPlayers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PingLimit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PingLimit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.HoursForLootRespawn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.HoursForLootRespawn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.MaxItemsForLootRespawn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.MaxItemsForLootRespawn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ConstructionPreventsLootRespawn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ConstructionPreventsLootRespawn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DropOffWhiteListAfterDeath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DropOffWhiteListAfterDeath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.NoFire)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.NoFire)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AnnounceDeath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AnnounceDeath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.MinutesPerPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.MinutesPerPage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SaveWorldEveryMinutes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SaveWorldEveryMinutes)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PlayerSafehouse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PlayerSafehouse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AdminSafehouse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AdminSafehouse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafehouseAllowTrepass)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafehouseAllowTrepass)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafehouseAllowFire)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafehouseAllowFire)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafehouseAllowLoot)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafehouseAllowLoot)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafehouseAllowRespawn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafehouseAllowRespawn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafehouseDaySurvivedToClaim)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafehouseDaySurvivedToClaim)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafeHouseRemovalTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafeHouseRemovalTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SafehouseAllowNonResidential)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SafehouseAllowNonResidential)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AllowDestructionBySledgehammer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AllowDestructionBySledgehammer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SledgehammerOnlyInSafehouse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SledgehammerOnlyInSafehouse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.KickFastPlayers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.KickFastPlayers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ServerPlayerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ServerPlayerID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.RCONPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.RCONPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.RCONPassword)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.RCONPassword)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DiscordEnable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DiscordEnable)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DiscordToken)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DiscordToken)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DiscordChannel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DiscordChannel)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DiscordChannelID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DiscordChannelID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.MaxAccountsPerUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.MaxAccountsPerUser)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AllowCoop)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AllowCoop)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SleepAllowed)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SleepAllowed)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SleepNeeded)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SleepNeeded)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.KnockedDownAllowed)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.KnockedDownAllowed)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SneakModeHideFromOtherPlayers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SneakModeHideFromOtherPlayers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.WorkshopItems)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.WorkshopItems)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SteamScoreboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SteamScoreboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SteamVAC)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SteamVAC)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.UPnP)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.UPnP)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.VoiceEnable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.VoiceEnable)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.VoiceMinDistance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.VoiceMinDistance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.VoiceMaxDistance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.VoiceMaxDistance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Voice3D)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Voice3D)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.SpeedLimit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.SpeedLimit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.LoginQueueEnabled)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.LoginQueueEnabled)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.LoginQueueConnectTimeout)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.LoginQueueConnectTimeout)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.server_browser_announced_ip)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.server_browser_announced_ip)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PlayerRespawnWithSelf)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PlayerRespawnWithSelf)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PlayerRespawnWithOther)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PlayerRespawnWithOther)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.FastForwardMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.FastForwardMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableSafehouseWhenPlayerConnected)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableSafehouseWhenPlayerConnected)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.Faction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.Faction)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.FactionDaySurvivedToCreate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.FactionDaySurvivedToCreate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.FactionPlayersRequiredForTag)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.FactionPlayersRequiredForTag)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableRadioStaff)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableRadioStaff)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableRadioAdmin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableRadioAdmin)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableRadioGM)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableRadioGM)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableRadioOverseer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableRadioOverseer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableRadioModerator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableRadioModerator)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.DisableRadioInvisible)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.DisableRadioInvisible)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ClientCommandFilter)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ClientCommandFilter)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ClientActionLogs)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ClientActionLogs)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PerkLogs)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PerkLogs)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.ItemNumbersLimitPerContainer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.ItemNumbersLimitPerContainer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.BloodSplatLifespanDays)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.BloodSplatLifespanDays)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AllowNonAsciiUsername)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AllowNonAsciiUsername)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.BanKickGlobalSound)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.BanKickGlobalSound)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.RemovePlayerCorpsesOnCorpseRemoval)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.RemovePlayerCorpsesOnCorpseRemoval)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.TrashDeleteAll)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.TrashDeleteAll)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PVPMeleeWhileHitReaction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PVPMeleeWhileHitReaction)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.MouseOverToSeeDisplayName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.MouseOverToSeeDisplayName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.HidePlayersBehindYou)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.HidePlayersBehindYou)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PVPMeleeDamageModifier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PVPMeleeDamageModifier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PVPFirearmDamageModifier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PVPFirearmDamageModifier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.CarEngineAttractionModifier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.CarEngineAttractionModifier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.PlayerBumpPlayer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.PlayerBumpPlayer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.MapRemotePlayerVisibility)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.MapRemotePlayerVisibility)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.BackupsCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.BackupsCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.BackupsOnStart)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.BackupsOnStart)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.BackupsOnVersionChange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.BackupsOnVersionChange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.BackupsPeriod)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.BackupsPeriod)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType3)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType3)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType4)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType4)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType6)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType6)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType7)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType7)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType8)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType8)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType9)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType9)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType10)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType10)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType11)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType11)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType12)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType12)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType13)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType13)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType14)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType14)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType15)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType15)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType16)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType16)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType17)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType17)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType18)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType18)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType19)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType19)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType20)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType20)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType21)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType21)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType22)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType22)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType23)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType23)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType24)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType24)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType2ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType2ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType3ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType3ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType4ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType4ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType9ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType9ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType15ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType15ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType20ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType20ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType22ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType22ThresholdMultiplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType24ThresholdMultiplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProjectZomboidConfiguration.AntiCheatProtectionType24ThresholdMultiplier)
+        </dd>
+    </dl>
+</div>
+<div>
+    @* <a asp-page="./Edit" asp-route-id="@id">Edit</a> | *@
+    <a asp-page="./Index">Back to List</a>
+</div>

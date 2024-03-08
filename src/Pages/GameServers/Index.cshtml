@@ -1,0 +1,51 @@
+﻿@page
+@model steam_server_command_center.Pages.GameServers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GameServer[0].SteamAppID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameServer[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameServer[0].LogoUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.GameServer) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SteamAppID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <img src="@item.LogoUrl" width="300" height="150" />
+                
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> | 
+                <a asp-page="./CreateInstance" asp-route-id="@item.ID">Create New Server</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

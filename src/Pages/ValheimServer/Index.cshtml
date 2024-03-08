@@ -1,0 +1,73 @@
+﻿@page
+@model steam_server_command_center.Pages.ValheimServer.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].ServerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].WorldName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].GameRootFolderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].GameServerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].InstanceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValheimConfiguration[0].IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ValheimConfiguration) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorldName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameRootFolderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameServerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstanceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

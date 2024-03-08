@@ -1,0 +1,80 @@
+﻿@page
+@model steam_server_command_center.Pages.ValheimServer.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ValheimConfiguration</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.ServerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.ServerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.WorldName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.WorldName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.GameRootFolderName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.GameRootFolderName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.GameServerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.GameServerID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.InstanceName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.InstanceName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.ContainerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.ContainerID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValheimConfiguration.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValheimConfiguration.IsActive)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ValheimConfiguration.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a> |
+    <form asp-page-handler="Download" method="post">
+        <button class="btn btn-primary">Download/Update Server</button>
+        <input type="hidden" name="id" value="@Model.ID" />
+    </form>
+    <form asp-page-handler="Start" method="post">
+        <button class="btn btn-primary">Start Server</button>
+        <input type="hidden" name="id" value="@Model.ID" />
+    </form>
+    <form asp-page-handler="Stop" method="post">
+        <button class="btn btn-danger">Stop Server</button>
+        <input type="hidden" name="id" value="@Model.ID" />
+    </form>
+</div>

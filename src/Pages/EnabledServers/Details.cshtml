@@ -1,0 +1,50 @@
+﻿@page
+@model steam_server_command_center.Pages.EnabledServers.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>EnabledServer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnabledServer.GameServerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnabledServer.GameServerID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnabledServer.InstanceName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnabledServer.InstanceName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnabledServer.ContainerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnabledServer.ContainerID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnabledServer.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnabledServer.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnabledServer.Configuration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnabledServer.Configuration)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.EnabledServer.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

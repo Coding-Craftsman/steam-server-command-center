@@ -1,0 +1,56 @@
+﻿@page
+@model steam_server_command_center.Pages.EnabledServers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EnabledServer[0].GameServerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnabledServer[0].InstanceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnabledServer[0].ContainerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnabledServer[0].IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.EnabledServer) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameServerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstanceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContainerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="@item.EditPageRoute()" asp-route-id="@item.ID">Edit Configuration</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
