@@ -34,27 +34,6 @@
                 <input asp-for="ValheimConfiguration.GameRootFolderName" class="form-control" />
                 <span asp-validation-for="ValheimConfiguration.GameRootFolderName" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="ValheimConfiguration.ID" />
-            <div class="form-group">
-                <label asp-for="ValheimConfiguration.GameServerID" class="control-label"></label>
-                <input asp-for="ValheimConfiguration.GameServerID" class="form-control" />
-                <span asp-validation-for="ValheimConfiguration.GameServerID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ValheimConfiguration.InstanceName" class="control-label"></label>
-                <input asp-for="ValheimConfiguration.InstanceName" class="form-control" />
-                <span asp-validation-for="ValheimConfiguration.InstanceName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ValheimConfiguration.ContainerID" class="control-label"></label>
-                <input asp-for="ValheimConfiguration.ContainerID" class="form-control" />
-                <span asp-validation-for="ValheimConfiguration.ContainerID" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ValheimConfiguration.IsActive" /> @Html.DisplayNameFor(model => model.ValheimConfiguration.IsActive)
-                </label>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

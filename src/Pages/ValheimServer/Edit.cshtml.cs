@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using steam_server_command_center.Models;
+using Newtonsoft.Json;
+using steam_server_command_center.Models.Valheim;
 
 namespace steam_server_command_center.Pages.ValheimServer
 {
@@ -17,6 +18,9 @@ namespace steam_server_command_center.Pages.ValheimServer
         [BindProperty]
         public ValheimConfiguration ValheimConfiguration { get; set; } = default!;
 
+        [FromQuery(Name = "ID")]
+        public int id { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -24,16 +28,14 @@ namespace steam_server_command_center.Pages.ValheimServer
                 return NotFound();
             }
 
-            var enabledServer = await _context.EnabledServers.Where(g => g.ID == id).FirstOrDefaultAsync();
+            var enabledServer = await _context.EnabledServers.FindAsync(id);
             
             if(enabledServer == null)
             {
                 return NotFound();
             }
 
-            ValheimConfiguration valheimconfiguration = new ValheimConfiguration(_context, enabledServer.ID);
-            valheimconfiguration.ID = enabledServer.ID;
-            valheimconfiguration.GameServerID = enabledServer.GameServerID;
+            ValheimConfiguration valheimconfiguration = JsonConvert.DeserializeObject<ValheimConfiguration>(enabledServer.Configuration);            
 
             //var valheimconfiguration =  await _context.ValheimConfiguration.FirstOrDefaultAsync(m => m.ID == id);
             if (valheimconfiguration == null)
@@ -48,17 +50,19 @@ namespace steam_server_command_center.Pages.ValheimServer
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            ValheimConfiguration.CommandCenterContext = _context;
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            
-            
-            await ValheimConfiguration.SaveSettings();
 
-            return RedirectToPage("./Index");
+            var enabledServer = await _context.EnabledServers.FindAsync(id);
+
+            enabledServer.Configuration = JsonConvert.SerializeObject(ValheimConfiguration);
+
+            _context.EnabledServers.Attach(enabledServer);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("/EnabledServers/Index");
         }
     }
 }

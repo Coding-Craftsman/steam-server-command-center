@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using steam_server_command_center.Models.Interfaces;
-using steam_server_command_center.Models.ProjectZomboid;
-
-namespace steam_server_command_center.Models
+﻿namespace steam_server_command_center.Models
 {
     /// <summary>
     /// An enabled server is a game server that has been created to run on this local machine.
@@ -28,9 +23,27 @@ namespace steam_server_command_center.Models
         public string? ContainerID { get; set; }
 
         // active means that it should be running at all times
-        public bool IsActive { get; set; } 
+        public bool IsActive { get; set; }
 
         public string Configuration { get; set; }
+
+        public string GameName
+        {
+            get
+            {
+                switch (SteamAppID)
+                {
+                    // Valheim
+                    case 896660:
+                        return "Valheim";
+                    // Zomboid
+                    case 380870:
+                        return "Project Zomboid";
+                    default:
+                        return "Unknown";
+                }
+            }
+        }
         
         public string EditPageRoute()
         {
