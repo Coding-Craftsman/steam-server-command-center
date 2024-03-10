@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using steam_server_command_center.Models;
+using Newtonsoft.Json;
+using steam_server_command_center.Models.Valheim;
 
 namespace steam_server_command_center.Pages.ValheimServer
 {
@@ -26,18 +22,26 @@ namespace steam_server_command_center.Pages.ValheimServer
             if (id == null)
             {
                 return NotFound();
-            }            
+            }
 
-            ValheimConfiguration valheimconfiguration = new ValheimConfiguration(_context, (int)id);
+            var enabledServer = await _context.EnabledServers.FindAsync(id);
 
-            if (valheimconfiguration == null)
+            if (enabledServer != null)
             {
-                return NotFound();
+                if(enabledServer.Configuration != null)
+                {
+                    ValheimConfiguration valheimconfiguration = JsonConvert.DeserializeObject<ValheimConfiguration>(enabledServer.Configuration);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
-                ValheimConfiguration = valheimconfiguration;
+                return NotFound();
             }
+            
             return Page();
         }
 
@@ -53,19 +57,8 @@ namespace steam_server_command_center.Pages.ValheimServer
             //var valheimconfiguration = await _context.ValheimConfiguration.FindAsync(id);
             if (server != null)
             {
-                EnabledServer enabledServer = server;
-                //ValheimConfiguration = valheimconfiguration;
-                _context.EnabledServers.Remove(enabledServer);
-
-                foreach (string key in ValheimConfiguration.ServerSettingKeys)
-                {
-                    // now delete all the server configs for this instance
-                    ConfigurationItem setting = _context.Configuration.Where(c => c.Key == string.Format(key, id)).FirstOrDefault();
-                    if (setting != null)
-                    {
-                        _context.Configuration.Remove(setting);
-                    }
-                }
+                _context.EnabledServers.Remove(server);
+                
                 await _context.SaveChangesAsync();
             }
 

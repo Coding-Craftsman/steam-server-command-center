@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using steam_server_command_center.Models;
+using steam_server_command_center.Models.Valheim;
 
 namespace steam_server_command_center.Pages.ValheimServer
 {
@@ -22,6 +22,9 @@ namespace steam_server_command_center.Pages.ValheimServer
 
         public ValheimConfiguration ValheimConfiguration { get; set; } = default!;
 
+        [FromQuery(Name = "ID")]
+        public int id { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -31,7 +34,7 @@ namespace steam_server_command_center.Pages.ValheimServer
 
             ID = (int)id;
 
-            ValheimConfiguration valheimconfiguration = new ValheimConfiguration(_context, (int)id);
+            ValheimConfiguration valheimconfiguration = new ValheimConfiguration();
             
             if (valheimconfiguration == null)
             {
@@ -46,13 +49,14 @@ namespace steam_server_command_center.Pages.ValheimServer
 
         public async Task<IActionResult> OnPostStart(int id)
         {
-            ValheimConfiguration ValheimConfiguration = new ValheimConfiguration(_context, id);
+            ValheimConfiguration ValheimConfiguration = new ValheimConfiguration();
 
             var rootPath = _context.Configuration.Where(c => c.Key == "global.settings.game_server_root").FirstOrDefault();
 
             if (rootPath != null)
             {
-                Models.ValheimServer server = new Models.ValheimServer(ValheimConfiguration, rootPath.Value);
+                var enabledServer = await _context.EnabledServers.FindAsync(id);
+                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(ValheimConfiguration, rootPath.Value, enabledServer, _context);
                 await server.StartServer();
             }
 
@@ -61,13 +65,14 @@ namespace steam_server_command_center.Pages.ValheimServer
 
         public IActionResult OnPostDownload(int id)
         {
-            ValheimConfiguration ValheimConfiguration = new ValheimConfiguration(_context, id);
+            ValheimConfiguration ValheimConfiguration = new ValheimConfiguration();
 
             var rootPath = _context.Configuration.Where(c => c.Key == "global.settings.game_server_root").FirstOrDefault();
 
             if (rootPath != null)
             {
-                Models.ValheimServer server = new Models.ValheimServer(ValheimConfiguration, rootPath.Value);
+                var enabledServer = _context.EnabledServers.Find(id);
+                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(ValheimConfiguration, rootPath.Value, enabledServer, _context);
                 server.DownloadGameContent();
             }
 
@@ -76,13 +81,14 @@ namespace steam_server_command_center.Pages.ValheimServer
 
         public IActionResult OnPostStop(int id)
         {
-            ValheimConfiguration ValheimConfiguration = new ValheimConfiguration(_context, id);
+            ValheimConfiguration ValheimConfiguration = new ValheimConfiguration();
 
             var rootPath = _context.Configuration.Where(c => c.Key == "global.settings.game_server_root").FirstOrDefault();
 
             if (rootPath != null)
             {
-                Models.ValheimServer server = new Models.ValheimServer(ValheimConfiguration, rootPath.Value);
+                var enabledServer = _context.EnabledServers.Find(id);
+                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(ValheimConfiguration, rootPath.Value, enabledServer, _context);
                 server.StopServer();
             }
 

@@ -8,12 +8,12 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EnabledServer[0].GameName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.EnabledServer[0].GameServerID)
             </th>
@@ -32,6 +32,9 @@
     <tbody>
 @foreach (var item in Model.EnabledServer) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GameServerID)
             </td>

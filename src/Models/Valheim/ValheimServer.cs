@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace steam_server_command_center.Models
+namespace steam_server_command_center.Models.Valheim
 {
     public class ValheimServer
     {
@@ -9,87 +9,93 @@ namespace steam_server_command_center.Models
 
         public ValheimConfiguration Configuration { get; set; }
 
+        private EnabledServer enabledServerSettings;
+
+        private CommandCenterContext _context;
+
         // This is the start script for the Valheim server that runs in the docker container.
         //  We need to update this script with any customizations that need to be added to the
         //   base game
-        private const string startServerScriptName = "start_server.sh";
-        
+        //private string startServerScriptName { get; set; } = "start_server.sh";
+
         // The modified contents of the start_server.sh file.  Note that it has {} for the fields 
         //  that the app can modify to make a custom start
-        private const string startScriptContent = @"
-            #!/bin/bash
-            export templdpath=$LD_LIBRARY_PATH
-            export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
-            export SteamAppId=892970
+        //private string startScriptContent { get; set; } = @"
+        //    #!/bin/bash
+        //    export templdpath=$LD_LIBRARY_PATH
+        //    export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
+        //    export SteamAppId=892970
 
-            echo ""Starting server PRESS CTRL-C to exit""
+        //    echo ""Starting server PRESS CTRL-C to exit""
 
-            # Tip: Make a local copy of this script to avoid it being overwritten by steam.
-            # NOTE: Minimum password length is 5 characters & Password cant be in the server name.
-            # NOTE: You need to make sure the ports 2456-2458 is being forwarded to your server through your local router & firewall.
-            ./valheim_server.x86_64 -name ""{0}"" -port 2456 -world ""{1}"" -password ""{2}"" 
+        //    # Tip: Make a local copy of this script to avoid it being overwritten by steam.
+        //    # NOTE: Minimum password length is 5 characters & Password cant be in the server name.
+        //    # NOTE: You need to make sure the ports 2456-2458 is being forwarded to your server through your local router & firewall.
+        //    ./valheim_server.x86_64 -name ""{0}"" -port 2456 -world ""{1}"" -password ""{2}"" 
 
-            export LD_LIBRARY_PATH=$templdpath
-            ";
+        //    export LD_LIBRARY_PATH=$templdpath
+        //    ";
 
         // This is the contents of the docker file that is used to create a custom docker container
         //  image for this game server.
-        private const string dockerFileContents = """
-            ######## INSTALL ########
-            
-            # Set the base image
-            FROM ubuntu:22.04
-            
-            # Set environment variables
-            ENV USER root
-            ENV HOME /root
-            
-            # Set working directory
-            WORKDIR $HOME
-            
-            # Insert Steam prompt answers
-            SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-            RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
-             && echo steam steam/license note '' | debconf-set-selections
-            
-            # Update the repository and install SteamCMD
-            ARG DEBIAN_FRONTEND=noninteractive
-            RUN dpkg --add-architecture i386 \
-             && apt-get update -y \
-             && apt-get install -y --no-install-recommends ca-certificates locales steamcmd \
-             && rm -rf /var/lib/apt/lists/*
-            
-            # Add unicode support
-            RUN locale-gen en_US.UTF-8
-            ENV LANG 'en_US.UTF-8'
-            ENV LANGUAGE 'en_US:en'
-            
-            # Create symlink for executable
-            RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
-            
-            # Update SteamCMD and verify latest version
-            RUN steamcmd +quit
-            
-            # Fix missing directories and libraries
-            RUN mkdir -p $HOME/.steam \
-             && ln -s $HOME/.local/share/Steam/steamcmd/linux32 $HOME/.steam/sdk32 \
-             && ln -s $HOME/.local/share/Steam/steamcmd/linux64 $HOME/.steam/sdk64 \
-             && ln -s $HOME/.steam/sdk32/steamclient.so $HOME/.steam/sdk32/steamservice.so \
-             && ln -s $HOME/.steam/sdk64/steamclient.so $HOME/.steam/sdk64/steamservice.so
-            
-            # Expose the server game ports
-            EXPOSE 2456-2457/udp
-            
-            # Set default command
-            WORKDIR /data
-            ENTRYPOINT ["bash"]
-            CMD ["./start_server.sh"] 
-            """;
+        //private string dockerFileContents { get; set; } = """
+        //    ######## INSTALL ########
 
-        public ValheimServer(ValheimConfiguration valheimConfiguration, string ServerRootPath)
+        //    # Set the base image
+        //    FROM ubuntu:22.04
+
+        //    # Set environment variables
+        //    ENV USER root
+        //    ENV HOME /root
+
+        //    # Set working directory
+        //    WORKDIR $HOME
+
+        //    # Insert Steam prompt answers
+        //    SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+        //    RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
+        //     && echo steam steam/license note '' | debconf-set-selections
+
+        //    # Update the repository and install SteamCMD
+        //    ARG DEBIAN_FRONTEND=noninteractive
+        //    RUN dpkg --add-architecture i386 \
+        //     && apt-get update -y \
+        //     && apt-get install -y --no-install-recommends ca-certificates locales steamcmd \
+        //     && rm -rf /var/lib/apt/lists/*
+
+        //    # Add unicode support
+        //    RUN locale-gen en_US.UTF-8
+        //    ENV LANG 'en_US.UTF-8'
+        //    ENV LANGUAGE 'en_US:en'
+
+        //    # Create symlink for executable
+        //    RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
+
+        //    # Update SteamCMD and verify latest version
+        //    RUN steamcmd +quit
+
+        //    # Fix missing directories and libraries
+        //    RUN mkdir -p $HOME/.steam \
+        //     && ln -s $HOME/.local/share/Steam/steamcmd/linux32 $HOME/.steam/sdk32 \
+        //     && ln -s $HOME/.local/share/Steam/steamcmd/linux64 $HOME/.steam/sdk64 \
+        //     && ln -s $HOME/.steam/sdk32/steamclient.so $HOME/.steam/sdk32/steamservice.so \
+        //     && ln -s $HOME/.steam/sdk64/steamclient.so $HOME/.steam/sdk64/steamservice.so
+
+        //    # Expose the server game ports
+        //    EXPOSE 2456-2457/udp
+
+        //    # Set default command
+        //    WORKDIR /data
+        //    ENTRYPOINT ["bash"]
+        //    CMD ["./start_server.sh"] 
+        //    """;
+
+        public ValheimServer(ValheimConfiguration valheimConfiguration, string ServerRootPath, EnabledServer enabledServerSettings, CommandCenterContext context)
         {
             ServerPath = ServerRootPath;
             Configuration = valheimConfiguration;
+            this.enabledServerSettings = enabledServerSettings;
+            _context = context;
         }
 
         /// <summary>
@@ -143,7 +149,7 @@ namespace steam_server_command_center.Models
             p.WaitForExit();
 
             // update the start script
-            updateStartScript(Path.Combine(serverPath, startServerScriptName));
+            updateStartScript(Path.Combine(serverPath, Configuration.startServerScriptName));
         }
 
         /// <summary>
@@ -153,7 +159,7 @@ namespace steam_server_command_center.Models
         public void CreateRuntimeContainer()
         {
             // first, write the content of the docker file out to the game server root path
-            File.WriteAllText(Path.Combine(ServerPath, Configuration.GameRootFolderName, "Dockerfile"), dockerFileContents);
+            File.WriteAllText(Path.Combine(ServerPath, Configuration.GameRootFolderName, "Dockerfile"), Configuration.dockerFileContents);
 
             var gameRootPath = Path.Combine(ServerPath, Configuration.GameRootFolderName);
 
@@ -182,7 +188,7 @@ namespace steam_server_command_center.Models
         {
             var serverPath = Path.Combine(ServerPath, Configuration.GameRootFolderName, "server");
 
-            updateStartScript(Path.Combine(serverPath, startServerScriptName));
+            updateStartScript(Path.Combine(serverPath, Configuration.startServerScriptName));
 
             var processInfo = new ProcessStartInfo
             {
@@ -198,8 +204,10 @@ namespace steam_server_command_center.Models
             var p = Process.Start(processInfo);
             var id = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
-            Configuration.ContainerID = id;
-            await Configuration.SaveSettings();
+            enabledServerSettings.ContainerID = id;
+            _context.EnabledServers.Attach(enabledServerSettings);
+            await _context.SaveChangesAsync();
+            //await Configuration.SaveSettings();
         }
 
         /// <summary>
@@ -210,13 +218,13 @@ namespace steam_server_command_center.Models
         {
             var serverPath = Path.Combine(ServerPath, Configuration.GameRootFolderName, "server");
 
-            updateStartScript(Path.Combine(serverPath, startServerScriptName));
+            updateStartScript(Path.Combine(serverPath, Configuration.startServerScriptName));
 
             var processInfo = new ProcessStartInfo
             {
                 FileName = "powershell.exe",
                 WorkingDirectory = serverPath,
-                Arguments = "docker stop " + Configuration.ContainerID,
+                Arguments = "docker stop " + enabledServerSettings.ContainerID,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = false
@@ -225,8 +233,10 @@ namespace steam_server_command_center.Models
             var p = Process.Start(processInfo);
             var id = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
-            Configuration.ContainerID = "";
-            await Configuration.SaveSettings();
+            enabledServerSettings.ContainerID = "";
+            _context.EnabledServers.Attach(enabledServerSettings);
+            await _context.SaveChangesAsync();
+            //await Configuration.SaveSettings();
         }
 
         /// <summary>
@@ -241,7 +251,7 @@ namespace steam_server_command_center.Models
 
             // now write the new contents of the file
             File.WriteAllText(scriptPath, 
-                        string.Format(startScriptContent, 
+                        string.Format(Configuration.startScriptContent, 
                             Configuration.ServerName, 
                             Configuration.WorldName, 
                             Configuration.Password));
