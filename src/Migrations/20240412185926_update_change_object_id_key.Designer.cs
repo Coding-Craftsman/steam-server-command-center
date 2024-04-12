@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using steam_server_command_center.Models;
 
@@ -10,9 +11,11 @@ using steam_server_command_center.Models;
 namespace steam_server_command_center.Migrations
 {
     [DbContext(typeof(CommandCenterContext))]
-    partial class CommandCenterContextModelSnapshot : ModelSnapshot
+    [Migration("20240412185926_update_change_object_id_key")]
+    partial class update_change_object_id_key
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");

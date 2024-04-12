@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using steam_server_command_center.Models.Valheim;
+using Object_Change_Tracker;
+using System.Net;
+using steam_server_command_center.Models;
 
 namespace steam_server_command_center.Pages.ValheimServer
 {
@@ -57,6 +60,19 @@ namespace steam_server_command_center.Pages.ValheimServer
             //var valheimconfiguration = await _context.ValheimConfiguration.FindAsync(id);
             if (server != null)
             {
+                ChangeDetector changeDetector = new ChangeDetector();
+
+                List<Change> changes = changeDetector.GetChanges(server, new EnabledServer(), "user", DateTime.Now);
+
+                if (changes.Any())
+                {
+                    foreach (Change change in changes)
+                    {
+                        CommandCenterChange dbChange = new CommandCenterChange(change);
+                        _context.Changes.Add(dbChange);
+                    }
+                }
+
                 _context.EnabledServers.Remove(server);
                 
                 await _context.SaveChangesAsync();

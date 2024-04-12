@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using steam_server_command_center.Models.Valheim;
+using steam_server_command_center.Models;
+using Object_Change_Tracker;
 
 namespace steam_server_command_center.Pages.ValheimServer
 {
@@ -56,8 +58,22 @@ namespace steam_server_command_center.Pages.ValheimServer
             }
 
             var enabledServer = await _context.EnabledServers.FindAsync(id);
+            var originalServer = enabledServer;
+
+            ChangeDetector changeDetector = new ChangeDetector();
 
             enabledServer.Configuration = JsonConvert.SerializeObject(ValheimConfiguration);
+
+            List<Change> changes = changeDetector.GetChanges(originalServer, enabledServer, "user", DateTime.Now);
+
+            if (changes.Any())
+            {
+                foreach (Change change in changes)
+                {
+                    CommandCenterChange dbChange = new CommandCenterChange(change);
+                    _context.Changes.Add(dbChange);
+                }
+            }
 
             _context.EnabledServers.Attach(enabledServer);
             await _context.SaveChangesAsync();

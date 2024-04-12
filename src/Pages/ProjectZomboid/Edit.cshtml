@@ -16,6 +16,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
+                <label asp-for="ProjectZomboidConfiguration.ServerRoot" class="control-label"></label>
+                <input asp-for="ProjectZomboidConfiguration.ServerRoot" class="form-control" />
+                <span asp-validation-for="ProjectZomboidConfiguration.ServerRoot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ProjectZomboidConfiguration.AdminPassword" class="control-label"></label>
                 <input asp-for="ProjectZomboidConfiguration.AdminPassword" class="form-control" />
                 <span asp-validation-for="ProjectZomboidConfiguration.AdminPassword" class="text-danger"></span>
@@ -733,7 +738,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="/EnabledServers/Index">Back to List</a>
 </div>
 
 @section Scripts {

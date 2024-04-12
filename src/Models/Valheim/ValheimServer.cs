@@ -1,11 +1,13 @@
-﻿using System.Diagnostics;
+﻿using Newtonsoft.Json;
+using steam_server_command_center.Models.Interfaces;
+using System.Diagnostics;
 
 namespace steam_server_command_center.Models.Valheim
 {
-    public class ValheimServer
+    public class ValheimServer : IGameServer
     {
         // the path to the application root server level (i.e. E:\steam-server-command-center)
-        public string ServerPath { get; set; } = "";
+        public string ApplicationRoot { get; set; } = "";
 
         public ValheimConfiguration Configuration { get; set; }
 
@@ -90,50 +92,65 @@ namespace steam_server_command_center.Models.Valheim
         //    CMD ["./start_server.sh"] 
         //    """;
 
-        public ValheimServer(ValheimConfiguration valheimConfiguration, string ServerRootPath, EnabledServer enabledServerSettings, CommandCenterContext context)
+        public ValheimServer(EnabledServer enabledServer, CommandCenterContext context)
         {
-            ServerPath = ServerRootPath;
-            Configuration = valheimConfiguration;
-            this.enabledServerSettings = enabledServerSettings;
+            ApplicationRoot = context.Configuration.Where(c => c.Key == "global.settings.application_root").First().Value;
+            Configuration = JsonConvert.DeserializeObject<ValheimConfiguration>(enabledServer.Configuration);
+            this.enabledServerSettings = enabledServer;
             _context = context;
         }
 
-        /// <summary>
-        /// Checks to make sure the application Root path where all the servers will be stored
-        ///  exists.
-        /// </summary>
-        private void checkServerPath()
+        public void CreateContainerImage()
         {
-            // check to see if the folder in the server path exists, if it doesn't create it
-            if (ServerPath != null || ServerPath != "")
+            var gameRootPath = Path.Combine(ApplicationRoot, Configuration.ServerRoot);
+
+            var processInfo = new ProcessStartInfo
             {
-                if (!Directory.Exists(ServerPath))
-                {
-                    // create the directory
-                    Directory.CreateDirectory(ServerPath);
-                }
-            }
+                //LoadUserProfile = true,
+                FileName = "powershell.exe",
+                WorkingDirectory = gameRootPath,
+                Arguments = "docker build -t valheim-run-server-app .",
+                //RedirectStandardOutput = false,
+                UseShellExecute = true,
+                CreateNoWindow = false
+            };
+
+            var p = Process.Start(processInfo);
+            p.WaitForExit();
+        }
+
+        public void CreateDockerFile()
+        {
+            // first, write the content of the docker file out to the game server root path
+            File.WriteAllText(Path.Combine(ApplicationRoot, Configuration.ServerRoot, "Dockerfile"), Configuration.dockerFileContents);
+        }
+
+        public void CreateServerConfiguration()
+        {
+            var serverPath = Path.Combine(ApplicationRoot, Configuration.ServerRoot, "server");
+
+            updateStartScript(Path.Combine(serverPath, Configuration.startServerScriptName));
         }
 
         /// <summary>
         /// Creates an instance of the SteamCMD container and downloads all the game data for 
         ///  this server.
         /// </summary>
-        public void DownloadGameContent()
+        public void DownloadGameFiles()
         {
             checkServerPath();
 
-            if (!Directory.Exists(Path.Combine(ServerPath, Configuration.GameRootFolderName)))
+            if (!Directory.Exists(Path.Combine(ApplicationRoot, Configuration.ServerRoot)))
             {
-                Directory.CreateDirectory(Path.Combine(ServerPath, Configuration.GameRootFolderName));
+                Directory.CreateDirectory(Path.Combine(ApplicationRoot, Configuration.ServerRoot));
             }
 
-            if (!Directory.Exists(Path.Combine(ServerPath, Configuration.GameRootFolderName, "server")))
+            if (!Directory.Exists(Path.Combine(ApplicationRoot, Configuration.ServerRoot, "server")))
             {
-                Directory.CreateDirectory(Path.Combine(ServerPath, Configuration.GameRootFolderName, "server"));
+                Directory.CreateDirectory(Path.Combine(ApplicationRoot, Configuration.ServerRoot, "server"));
             }
 
-            var serverPath = Path.Combine(ServerPath, Configuration.GameRootFolderName, "server");
+            var serverPath = Path.Combine(ApplicationRoot, Configuration.ServerRoot, "server");
             // start a process to kick off the docker download of the game.
             var processInfo = new ProcessStartInfo
             {
@@ -153,57 +170,37 @@ namespace steam_server_command_center.Models.Valheim
         }
 
         /// <summary>
-        /// Creates a new dockerfile and uses it to create a new custom container that will run
-        ///  this game server.
-        /// </summary>
-        public void CreateRuntimeContainer()
-        {
-            // first, write the content of the docker file out to the game server root path
-            File.WriteAllText(Path.Combine(ServerPath, Configuration.GameRootFolderName, "Dockerfile"), Configuration.dockerFileContents);
-
-            var gameRootPath = Path.Combine(ServerPath, Configuration.GameRootFolderName);
-
-            var processInfo = new ProcessStartInfo
-            {
-                //LoadUserProfile = true,
-                FileName = "powershell.exe",
-                WorkingDirectory = gameRootPath,
-                Arguments = "docker build -t valheim-run-server-app .",
-                //RedirectStandardOutput = false,
-                UseShellExecute = true,
-                CreateNoWindow = false
-            };
-
-            var p = Process.Start(processInfo);
-            p.WaitForExit();
-        }
-
-        /// <summary>
         /// Starts an instance of the custom runtime game server.  This server runs detached and will remove itself
         ///  when the container stops.  All the game files will remain on the local machine to be used by other
         ///  containers in the future.
         /// </summary>
         /// <returns></returns>
-        public async Task StartServer()
+        public async void StartServer()
         {
-            var serverPath = Path.Combine(ServerPath, Configuration.GameRootFolderName, "server");
+            var installPath = Path.Combine(ApplicationRoot, Configuration.ServerRoot, "server");
 
-            updateStartScript(Path.Combine(serverPath, Configuration.startServerScriptName));
+            updateStartScript(Path.Combine(installPath, Configuration.startServerScriptName));
 
             var processInfo = new ProcessStartInfo
             {
                 LoadUserProfile = true,
                 FileName = "powershell.exe",
-                WorkingDirectory = serverPath,
-                Arguments = "docker run --rm -d -v " + serverPath + ":/data\" -p '2456-2457:2456-2457/udp' valheim-run-server-app",
+                WorkingDirectory = installPath,
+                Arguments = "docker run --rm -d -v " + installPath + ":/data\" -p '2456-2457:2456-2457/udp' valheim-run-server-app",
                 RedirectStandardOutput = true,
-                UseShellExecute = false,
+                RedirectStandardError = true,
+                UseShellExecute = false, // try this?
                 CreateNoWindow = false
             };
 
             var p = Process.Start(processInfo);
+            StreamReader streamReader = p.StandardError;
+
             var id = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
+
+            Console.WriteLine(streamReader.ReadLine());
+
             enabledServerSettings.ContainerID = id;
             _context.EnabledServers.Attach(enabledServerSettings);
             await _context.SaveChangesAsync();
@@ -214,16 +211,16 @@ namespace steam_server_command_center.Models.Valheim
         /// Stops the current runtime container based on the saved container ID
         /// </summary>
         /// <returns></returns>
-        public async Task StopServer()
+        public void StopServer()
         {
-            var serverPath = Path.Combine(ServerPath, Configuration.GameRootFolderName, "server");
+            var installPath = Path.Combine(ApplicationRoot, Configuration.ServerRoot, "server");
 
-            updateStartScript(Path.Combine(serverPath, Configuration.startServerScriptName));
+            updateStartScript(Path.Combine(installPath, Configuration.startServerScriptName));
 
             var processInfo = new ProcessStartInfo
             {
                 FileName = "powershell.exe",
-                WorkingDirectory = serverPath,
+                WorkingDirectory = installPath,
                 Arguments = "docker stop " + enabledServerSettings.ContainerID,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -235,8 +232,36 @@ namespace steam_server_command_center.Models.Valheim
             p.WaitForExit();
             enabledServerSettings.ContainerID = "";
             _context.EnabledServers.Attach(enabledServerSettings);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             //await Configuration.SaveSettings();
+        }
+
+        /// <summary>
+        /// Checks to make sure the application Root path where all the servers will be stored
+        ///  exists.
+        /// </summary>
+        private void checkServerPath()
+        {
+            // check to see if the folder in the server path exists, if it doesn't create it
+            if (ApplicationRoot != null || ApplicationRoot != "")
+            {
+                if (!Directory.Exists(ApplicationRoot))
+                {
+                    // create the directory
+                    Directory.CreateDirectory(ApplicationRoot);
+                }
+            }
+        }
+
+        
+        /// <summary>
+        /// Creates a new dockerfile and uses it to create a new custom container that will run
+        ///  this game server.
+        /// </summary>
+        public void CreateRuntimeContainer()
+        {
+            
+            
         }
 
         /// <summary>
@@ -250,10 +275,10 @@ namespace steam_server_command_center.Models.Valheim
             File.Delete(scriptPath);
 
             // now write the new contents of the file
-            File.WriteAllText(scriptPath, 
-                        string.Format(Configuration.startScriptContent, 
-                            Configuration.ServerName, 
-                            Configuration.WorldName, 
+            File.WriteAllText(scriptPath,
+                        string.Format(Configuration.startScriptContent,
+                            Configuration.ServerName,
+                            Configuration.WorldName,
                             Configuration.Password));
         }
     }

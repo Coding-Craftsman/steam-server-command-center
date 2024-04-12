@@ -8,19 +8,25 @@
     <h1 class="display-4">@Model.headingValue</h1>
     @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
     <form asp-page-handler="UpdateServerRoot" method="post">
-        @if(Model.ServerRoot.Length > 0)
+        @if (Model.ApplicationRoot.Length > 0)
         {
             <p>
                 Server root folder: 
-                @Model.ServerRoot
+                @Model.ApplicationRoot
             </p>
         }
         else
         {
-            <p><input asp-for="ServerRoot" class="form-control" /></p>
+            <p><input asp-for="ApplicationRoot" class="form-control" /></p>
             <button class="btn btn-success">Update Server Root</button>
-        }
+        }        
     </form>
+    <ul>
+        @foreach (var item in Model.ActiveServers)
+        {
+            <li>@item.InstanceName: @item.StatusColor</li>
+        }
+    </ul>
 @*     <form asp-page-handler="Test" method="post">
         <button class="btn btn-primary">Start Server!</button>
     </form> *@

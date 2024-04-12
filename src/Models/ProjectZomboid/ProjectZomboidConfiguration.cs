@@ -23,7 +23,7 @@ namespace steam_server_command_center.Models.ProjectZomboid
 
         public string ConfigFileLocation { get; set; } = "/data/Zomboid/Zomboid/Server/servertest.ini";
 
-        public string GameServerRootFolder = "Zomboid-108600";
+        public string ServerRoot { get; set; } = "Zomboid-108600";
 
         // Players can hurt and kill other players
         public bool PVP { get; set; } = true;

@@ -56,8 +56,8 @@ namespace steam_server_command_center.Pages.ValheimServer
             if (rootPath != null)
             {
                 var enabledServer = await _context.EnabledServers.FindAsync(id);
-                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(ValheimConfiguration, rootPath.Value, enabledServer, _context);
-                await server.StartServer();
+                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(enabledServer, _context);
+                server.StartServer();
             }
 
             return RedirectToPage("Details", new { id = id });
@@ -72,8 +72,8 @@ namespace steam_server_command_center.Pages.ValheimServer
             if (rootPath != null)
             {
                 var enabledServer = _context.EnabledServers.Find(id);
-                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(ValheimConfiguration, rootPath.Value, enabledServer, _context);
-                server.DownloadGameContent();
+                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(enabledServer, _context);
+                server.DownloadGameFiles();
             }
 
             return RedirectToPage("Details", new { id = id });
@@ -88,7 +88,7 @@ namespace steam_server_command_center.Pages.ValheimServer
             if (rootPath != null)
             {
                 var enabledServer = _context.EnabledServers.Find(id);
-                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(ValheimConfiguration, rootPath.Value, enabledServer, _context);
+                Models.Valheim.ValheimServer server = new Models.Valheim.ValheimServer(enabledServer, _context);
                 server.StopServer();
             }
 

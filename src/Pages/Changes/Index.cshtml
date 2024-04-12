@@ -1,0 +1,58 @@
+﻿@page
+@model steam_server_command_center.Pages.Changes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>All Application Changes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandCenterChange[0].ObjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandCenterChange[0].ObjectID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandCenterChange[0].PropertyChanged)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandCenterChange[0].OldValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandCenterChange[0].NewValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandCenterChange[0].TimeStamp)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CommandCenterChange) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObjectID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PropertyChanged)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OldValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>           
+        </tr>
+}
+    </tbody>
+</table>

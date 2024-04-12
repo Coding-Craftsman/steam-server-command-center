@@ -15,9 +15,10 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EnabledServer.ID" />
+            <input type="hidden" asp-for="EnabledServer.InstalledPath" />
             <div class="form-group">
                 <label asp-for="EnabledServer.GameServerID" class="control-label"></label>
-                <input asp-for="EnabledServer.GameServerID" class="form-control" />
+                <input asp-for="EnabledServer.GameServerID" class="form-control" readonly="readonly" />
                 <span asp-validation-for="EnabledServer.GameServerID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -27,13 +28,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="EnabledServer.ContainerID" class="control-label"></label>
-                <input asp-for="EnabledServer.ContainerID" class="form-control" />
+                <input asp-for="EnabledServer.ContainerID" class="form-control" readonly="readonly" />
                 <span asp-validation-for="EnabledServer.ContainerID" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EnabledServer.IsActive" /> @Html.DisplayNameFor(model => model.EnabledServer.IsActive)
+                    <input class="form-check-input" disabled asp-for="EnabledServer.IsActive" /> @Html.DisplayNameFor(model => model.EnabledServer.IsActive)
                 </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="ServerStatus.StatusColor"></label>
+                <input class="form-control" asp-for="ServerStatus.StatusColor" readonly="readonly"></input>
             </div>
             @* <div class="form-group">
                 <label asp-for="EnabledServer.Configuration" class="control-label"></label>
@@ -44,6 +49,20 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <form asp-page-handler="Setup" method="post">
+            <button class="btn btn-primary">Setup</button>
+            <input type="hidden" name="id" value="@Model.ID" />
+        </form>
+        <form asp-page-handler="Start" method="post">
+            <button class="btn btn-primary">Start</button>
+            <input type="hidden" name="id" value="@Model.ID" />
+        </form>
+        <form asp-page-handler="Stop" method="post">
+            <button class="btn btn-danger">Stop</button>
+            <input type="hidden" name="id" value="@Model.ID" />
+        </form>
+            
+        
     </div>
 </div>
 

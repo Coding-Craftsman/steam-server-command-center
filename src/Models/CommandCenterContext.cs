@@ -9,6 +9,8 @@ namespace steam_server_command_center.Models
         public DbSet<EnabledServer> EnabledServers { get; set; }
         public DbSet<ConfigurationItem> Configuration { get; set; }
         public DbSet<GameServer> GameServers { get; set; }
+        public DbSet<CommandCenterChange> Changes { get; set; }
+
         //public DbSet<ProjectZomboidConfiguration> ProjectZomboidConfigurations {get;set;}
 
         public string DbPath { get; }

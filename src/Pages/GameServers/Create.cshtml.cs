@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Object_Change_Tracker;
 using steam_server_command_center.Models;
+using Object_Change_Tracker;
 
 namespace steam_server_command_center.Pages.GameServers
 {
@@ -35,6 +37,21 @@ namespace steam_server_command_center.Pages.GameServers
             }
 
             _context.GameServers.Add(GameServer);
+            await _context.SaveChangesAsync();
+
+            ChangeDetector changeDetector = new ChangeDetector();
+
+            List<Change> changes = changeDetector.GetChanges(new GameServer(), GameServer, "user", DateTime.Now);
+
+            if (changes.Any())
+            {
+                foreach (Change change in changes)
+                {
+                    CommandCenterChange dbChange = new CommandCenterChange(change);
+                    _context.Changes.Add(dbChange);
+                }
+            }
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

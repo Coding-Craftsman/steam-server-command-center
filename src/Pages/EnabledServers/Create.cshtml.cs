@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using steam_server_command_center.Models;
+using Object_Change_Tracker;
 
 namespace steam_server_command_center.Pages.EnabledServers
 {
@@ -37,6 +38,20 @@ namespace steam_server_command_center.Pages.EnabledServers
             _context.EnabledServers.Add(EnabledServer);
             await _context.SaveChangesAsync();
 
+            Object_Change_Tracker.ChangeDetector changeDetector = new Object_Change_Tracker.ChangeDetector();
+
+            List<Change> changes = changeDetector.GetChanges(new EnabledServer(), EnabledServer, "user", DateTime.Now);
+
+            if (changes.Any())
+            {
+                foreach (Change change in changes)
+                {
+                    CommandCenterChange dbChange = new CommandCenterChange(change);
+                    _context.Changes.Add(dbChange);
+                }
+            }
+
+            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
     }

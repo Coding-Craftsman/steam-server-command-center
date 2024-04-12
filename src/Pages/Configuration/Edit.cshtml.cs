@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Object_Change_Tracker;
 using steam_server_command_center.Models;
 
 namespace steam_server_command_center.Pages.Configuration
@@ -46,6 +47,22 @@ namespace steam_server_command_center.Pages.Configuration
             {
                 return Page();
             }
+
+            // setup a change detector
+            Object_Change_Tracker.ChangeDetector changeDetector = new Object_Change_Tracker.ChangeDetector();
+
+            var originalObject = _context.Configuration.AsNoTracking().Where(c => c.ID == ConfigurationItem.ID).FirstOrDefault();
+
+            List<Change> changes = changeDetector.GetChanges(originalObject, ConfigurationItem, "user", DateTime.Now);
+
+            if(changes.Any())
+            {
+                foreach (Change change in changes)
+                {
+                    CommandCenterChange dbChange = new CommandCenterChange(change);
+                    _context.Changes.Add(dbChange);
+                }
+            }           
 
             _context.Attach(ConfigurationItem).State = EntityState.Modified;
 

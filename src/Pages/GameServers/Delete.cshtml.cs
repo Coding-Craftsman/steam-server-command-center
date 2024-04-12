@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using steam_server_command_center.Models;
+using Object_Change_Tracker;
 
 namespace steam_server_command_center.Pages.GameServers
 {
@@ -52,6 +53,20 @@ namespace steam_server_command_center.Pages.GameServers
             if (gameserver != null)
             {
                 GameServer = gameserver;
+
+                ChangeDetector changeDetector = new ChangeDetector();
+
+                List<Change> changes = changeDetector.GetChanges(GameServer, new GameServer(), "user", DateTime.Now);
+                
+                if (changes.Any())
+                {
+                    foreach (Change change in changes)
+                    {
+                        CommandCenterChange dbChange = new CommandCenterChange(change);
+                        _context.Changes.Add(dbChange);
+                    }
+                }
+
                 _context.GameServers.Remove(GameServer);
                 await _context.SaveChangesAsync();
             }

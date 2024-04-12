@@ -30,9 +30,9 @@
                 <span asp-validation-for="ValheimConfiguration.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ValheimConfiguration.GameRootFolderName" class="control-label"></label>
-                <input asp-for="ValheimConfiguration.GameRootFolderName" class="form-control" />
-                <span asp-validation-for="ValheimConfiguration.GameRootFolderName" class="text-danger"></span>
+                <label asp-for="ValheimConfiguration.ServerRoot" class="control-label"></label>
+                <input asp-for="ValheimConfiguration.ServerRoot" class="form-control" />
+                <span asp-validation-for="ValheimConfiguration.ServerRoot" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -42,7 +42,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="/EnabledServers/Index">Back to List</a>
 </div>
 
 @section Scripts {

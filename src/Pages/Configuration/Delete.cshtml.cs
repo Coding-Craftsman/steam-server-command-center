@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Object_Change_Tracker;
 using steam_server_command_center.Models;
 
 namespace steam_server_command_center.Pages.Configuration
@@ -52,6 +53,20 @@ namespace steam_server_command_center.Pages.Configuration
             if (configurationitem != null)
             {
                 ConfigurationItem = configurationitem;
+
+                Object_Change_Tracker.ChangeDetector changeDetector = new Object_Change_Tracker.ChangeDetector();
+
+                List<Change> changes = changeDetector.GetChanges(ConfigurationItem, new ConfigurationItem(), "user", DateTime.Now);
+
+                if (changes.Any())
+                {
+                    foreach (Change change in changes)
+                    {
+                        CommandCenterChange dbChange = new CommandCenterChange(change);
+                        _context.Changes.Add(dbChange);
+                    }
+                }
+
                 _context.Configuration.Remove(ConfigurationItem);
                 await _context.SaveChangesAsync();
             }

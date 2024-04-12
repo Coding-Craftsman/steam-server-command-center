@@ -26,10 +26,10 @@ namespace steam_server_command_center.Models.ProjectZomboid
          * */
 
         public const int GameID = 380870;
+       
+        public string ServerRoot { get; set; }
 
-        public string ServerPath { get; set; }
-
-        public string GameRootFolderName { get; set; } = "server";
+        public string InstallPath { get; set; } = "server";
 
         private const string dockerFileContents = """
             ######## INSTALL ########
@@ -95,20 +95,19 @@ namespace steam_server_command_center.Models.ProjectZomboid
             {
                 this.serverConfig = JsonConvert.DeserializeObject<ProjectZomboidConfiguration>(enabledServer.Configuration);
                 this.context = DataContext;
-                GameRootFolderName = Path.Join(serverConfig.GameServerRootFolder, "server");
-                ServerPath = context.Configuration.Where(c => c.Key == "global.settings.game_server_root").First().Value;
+                var appRootPath = context.Configuration.Where(c => c.Key == "global.settings.application_root").First().Value;
+                ServerRoot = Path.Join(appRootPath, serverConfig.ServerRoot);
+                InstallPath = Path.Join(ServerRoot, "server");
             }
         }
 
         public void CreateContainerImage()
         {
-            var gameRootPath = Path.Combine(ServerPath, GameRootFolderName);
-
             var processInfo = new ProcessStartInfo
             {
                 //LoadUserProfile = true,
                 FileName = "powershell.exe",
-                WorkingDirectory = gameRootPath,
+                WorkingDirectory = ServerRoot,
                 Arguments = "docker build -t projectzomboid-run-server-app .",
                 //RedirectStandardOutput = false,
                 UseShellExecute = true,
@@ -122,7 +121,7 @@ namespace steam_server_command_center.Models.ProjectZomboid
         public void CreateDockerFile()
         {
             // first, write the content of the docker file out to the game server root path
-            File.WriteAllText(Path.Combine(ServerPath, GameRootFolderName, "Dockerfile"), string.Format(dockerFileContents, serverConfig.AdminPassword));
+            File.WriteAllText(Path.Combine(ServerRoot, "Dockerfile"), string.Format(dockerFileContents, serverConfig.AdminPassword));
         }
 
         public void CreateServerConfiguration()
@@ -138,8 +137,8 @@ namespace steam_server_command_center.Models.ProjectZomboid
             var processInfo = new ProcessStartInfo
             {
                 FileName = "powershell.exe",
-                WorkingDirectory = ServerPath,
-                Arguments = "docker run -it -v " + ServerPath + ":/data steamcmd/steamcmd:latest +force_install_dir /data +login anonymous /data +app_update " + GameID + " +quit",
+                WorkingDirectory = InstallPath,
+                Arguments = "docker run -it -v " + InstallPath + ":/data steamcmd/steamcmd:latest +force_install_dir /data +login anonymous /data +app_update " + GameID + " +quit",
                 UseShellExecute = true,
                 CreateNoWindow = false
             };
@@ -150,13 +149,11 @@ namespace steam_server_command_center.Models.ProjectZomboid
 
         public async void StartServer()
         {
-            var serverPath = Path.Combine(ServerPath, GameRootFolderName, "server");
-
             var processInfo = new ProcessStartInfo
             {
                 FileName = "powershell.exe",
-                WorkingDirectory = serverPath,
-                Arguments = "docker run --rm -d -v " + serverPath + ":/data\" -p '16261-16262:16261-16262/udp' projectzomboid-run-server-app",
+                WorkingDirectory = InstallPath,
+                Arguments = "docker run --rm -d -v " + InstallPath + ":/data\" -p '16261-16262:16261-16262/udp' projectzomboid-run-server-app",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = false
@@ -174,14 +171,10 @@ namespace steam_server_command_center.Models.ProjectZomboid
 
         public void StopServer()
         {
-            var serverPath = Path.Combine(ServerPath, GameRootFolderName, "server");
-
-            //updateStartScript(Path.Combine(serverPath, startServerScriptName));
-
             var processInfo = new ProcessStartInfo
             {
                 FileName = "powershell.exe",
-                WorkingDirectory = serverPath,
+                WorkingDirectory = InstallPath,
                 //Arguments = "docker stop " + Configuration.ContainerID,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,

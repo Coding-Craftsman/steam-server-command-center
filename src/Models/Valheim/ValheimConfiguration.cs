@@ -92,7 +92,8 @@ namespace steam_server_command_center.Models.Valheim
             ENTRYPOINT ["bash"]
             CMD ["./start_server.sh"] 
             """;
-        
-        public string GameRootFolderName { get; set; } = "Valheim-896660";        
+
+        [DisplayName("Server Root")]
+        public string ServerRoot { get; set; } = "Valheim-896660";        
     }
 }

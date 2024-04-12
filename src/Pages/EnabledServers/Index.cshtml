@@ -15,13 +15,10 @@
                 @Html.DisplayNameFor(model => model.EnabledServer[0].GameName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnabledServer[0].GameServerID)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.EnabledServer[0].InstanceName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnabledServer[0].ContainerID)
+                @Html.DisplayNameFor(model => model.EnabledServer[0].InstalledPath)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EnabledServer[0].IsActive)
@@ -36,21 +33,17 @@
                 @Html.DisplayFor(modelItem => item.GameName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GameServerID)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.InstanceName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ContainerID)
+                    @Html.DisplayFor(modelItem => item.InstalledPath)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Edit" asp-route-id="@item.ID">Manage Server</a> |
                 <a asp-page="@item.EditPageRoute()" asp-route-id="@item.ID">Edit Configuration</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>

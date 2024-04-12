@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using steam_server_command_center.Models;
 using steam_server_command_center.Models.ProjectZomboid;
+using Object_Change_Tracker;
+using System.Net;
 
 namespace steam_server_command_center.Pages.ProjectZomboid
 {
@@ -51,6 +53,7 @@ namespace steam_server_command_center.Pages.ProjectZomboid
             }
 
             var enabledServer = await _context.EnabledServers.FindAsync(id);
+            var originalServer = enabledServer;
 
             if(enabledServer == null)
             {
@@ -58,6 +61,19 @@ namespace steam_server_command_center.Pages.ProjectZomboid
             }
 
             enabledServer.Configuration = JsonConvert.SerializeObject(ProjectZomboidConfiguration);
+
+            ChangeDetector changeDetector = new ChangeDetector();
+
+            List<Change> changes = changeDetector.GetChanges(originalServer, enabledServer, "user", DateTime.Now);
+
+            if (changes.Any())
+            {
+                foreach (Change change in changes)
+                {
+                    CommandCenterChange dbChange = new CommandCenterChange(change);
+                    _context.Changes.Add(dbChange);
+                }
+            }
 
             _context.Attach(ProjectZomboidConfiguration).State = EntityState.Modified;
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using steam_server_command_center.Models;
+using steam_server_command_center.Models.ServerStatus;
 
 namespace steam_server_command_center.Pages;
 
@@ -11,7 +12,10 @@ public class IndexModel : PageModel
     public string headingValue { get; set; } = "Initial Value";
 
     [BindProperty]
-    public string ServerRoot { get; set; } = string.Empty;
+    public string ApplicationRoot { get; set; } = string.Empty;
+
+    [BindProperty]
+    public List<ServerStatus> ActiveServers { get; set; } = new List<ServerStatus>();
 
     private readonly steam_server_command_center.Models.CommandCenterContext _context;
 
@@ -20,11 +24,45 @@ public class IndexModel : PageModel
         _logger = logger;
         _context = context;
 
-        var setting = _context.Configuration.Where(v => v.Key == "global.settings.game_server_root").FirstOrDefault();
+        ConfigurationItem? setting = null;
+
+        setting = _context.Configuration.Where(v => v.Key == "global.settings.application_root").FirstOrDefault();
+
+        if(setting == null)
+        {
+            setting = _context.Configuration.Where(v => v.Key == "global.settings.game_server_root").FirstOrDefault();
+
+            if(setting != null)
+            {
+                _context.Configuration.Remove(setting);
+                _context.SaveChanges();
+
+                setting.Key = "global.settings.application_root";
+                _context.Configuration.Add(setting);
+
+                _context.SaveChanges();
+            }
+        }
+        
         
         if(setting != null) 
         { 
-            ServerRoot = setting.Value;
+            ApplicationRoot = setting.Value;
+        }
+
+        var servers = _context.EnabledServers.Where(s => s.ContainerID != null || s.ContainerID.Length == 0).ToArray();
+
+        foreach(var server in servers)
+        {
+            ServerStatus item = new ServerStatus()
+            {
+                ContainterID = server.ContainerID,
+                EnabledServerID = server.ID,
+                InstanceName = server.InstanceName
+            };
+
+            item.CheckStatus();
+            ActiveServers.Add(item);
         }
     }
 
@@ -36,18 +74,18 @@ public class IndexModel : PageModel
     public async Task<IActionResult> OnPostUpdateServerRoot()
     {
         // first check to see if the key exists
-        var setting = _context.Configuration.Where(v => v.Key == "global.settings.game_server_root").FirstOrDefault();
+        var setting = _context.Configuration.Where(v => v.Key == "global.settings.application_root").FirstOrDefault();
 
         if (setting == null)
         {
             setting = new ConfigurationItem();
-            setting.Key = "global.settings.game_server_root";
-            setting.Value = ServerRoot;
+            setting.Key = "global.settings.application_root";
+            setting.Value = ApplicationRoot;
             _context.Configuration.Add(setting);
         }
         else
         {
-            setting.Value = ServerRoot;
+            setting.Value = ApplicationRoot;
 
             _context.Attach(setting).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }

@@ -1,4 +1,6 @@
-﻿namespace steam_server_command_center.Models
+﻿using System.ComponentModel;
+
+namespace steam_server_command_center.Models
 {
     /// <summary>
     /// A game server is a generic container for all the available games for this application to manage.  
@@ -14,6 +16,7 @@
         /// <summary>
         /// Steam ID for the game server
         /// </summary>
+        [DisplayName("Steam App ID")]
         public int SteamAppID { get; set; }
 
         /// <summary>
@@ -24,6 +27,7 @@
         /// <summary>
         /// URL for the logo of the game to display in the app
         /// </summary>
+        [DisplayName("Logo")]
         public string LogoUrl { get; set; }
 
         public GameServer()

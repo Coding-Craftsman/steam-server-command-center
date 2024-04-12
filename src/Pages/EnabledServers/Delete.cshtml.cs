@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Object_Change_Tracker;
 using steam_server_command_center.Models;
 
 namespace steam_server_command_center.Pages.EnabledServers
@@ -51,6 +52,19 @@ namespace steam_server_command_center.Pages.EnabledServers
             var enabledserver = await _context.EnabledServers.FindAsync(id);
             if (enabledserver != null)
             {
+                Object_Change_Tracker.ChangeDetector changeDetector = new Object_Change_Tracker.ChangeDetector();
+
+                List<Change> changes = changeDetector.GetChanges(enabledserver, new ConfigurationItem(), "user", DateTime.Now);
+
+                if (changes.Any())
+                {
+                    foreach (Change change in changes)
+                    {
+                        CommandCenterChange dbChange = new CommandCenterChange(change);
+                        _context.Changes.Add(dbChange);
+                    }
+                }
+
                 EnabledServer = enabledserver;
                 _context.EnabledServers.Remove(EnabledServer);
                 await _context.SaveChangesAsync();
